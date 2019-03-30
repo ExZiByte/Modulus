@@ -1,0 +1,4 @@
+.vscode/launch.json
+.vscode/settings.json
+mod/.editorconfig
+mod/src/main/java/me/exzibyte/modulus/Data.java
