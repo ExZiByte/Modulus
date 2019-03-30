@@ -2,3 +2,12 @@
 .vscode/settings.json
 mod/.editorconfig
 mod/src/main/java/me/exzibyte/modulus/Data.java
+src/main/java/me/exzibyte/modulus/Data.java
+target/classes/me/exzibyte/modulus/Data.class
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.eclipse.m2e.core.prefs
+.project
+.editorconfig
+.classpath
