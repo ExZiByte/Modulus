@@ -2,7 +2,7 @@ package me.exzibyte.modulus;
 
 import javax.security.auth.login.LoginException;
 
-import me.exzibyte.modulus.Modules.Moderation.Kick;
+import me.exzibyte.modulus.Modules.Moderation.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
@@ -18,6 +18,7 @@ public class Modulus {
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setGame(Game.playing("with modular bits!"));
 
+        builder.addEventListener(new Ban());
         builder.addEventListener(new Kick());
 
         builder.build();
