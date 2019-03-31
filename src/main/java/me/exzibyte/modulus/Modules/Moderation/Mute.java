@@ -52,30 +52,31 @@ public class Mute extends ListenerAdapter {
                                 .queue();
 
                         EnumSet<Permission> denyPermissions = EnumSet.of(Permission.MESSAGE_WRITE);
-                        
-                        for (Channel channel : event.getGuild().getTextChannels()){
+
+                        for (Channel channel : event.getGuild().getTextChannels()) {
                             channel.getManager().putPermissionOverride(muteRole, null, denyPermissions).queue();
                         }
 
-
-                        event.getChannel().sendMessage("Your server didn't have a Muted role so I went ahead and created one for you").queue((message) -> {
-                            message.delete().queueAfter(15, TimeUnit.SECONDS);
-                        });
+                        event.getChannel()
+                                .sendMessage(
+                                        "Your server didn't have a Muted role so I went ahead and created one for you")
+                                .queue((message) -> {
+                                    message.delete().queueAfter(15, TimeUnit.SECONDS);
+                                });
 
                         Member mentioned = event.getMessage().getMentionedMembers().get(0);
-
-                        // Build Information Embed to be sent to kicked user
+                        // Build Information Embed to be sent to muted user
                         muted.setDescription("You've been muted on: " + event.getGuild().getName()
                                 + " for: There was no reason specified");
                         muted.setColor(0xff5555);
-                        muted.setFooter(event.getJDA().getSelfUser().getName() + " Kicked",
+                        muted.setFooter(event.getJDA().getSelfUser().getName() + " Muted",
                                 event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                         muted.setTimestamp(Instant.now());
 
-                        // Build Information Embed to be to server channel
+                        // Build Information Embed to be sent to server channel
                         eb.setDescription("You've muted: " + mentioned.getAsMention() + " for: No reason specified");
                         eb.setColor(0x4fff45);
-                        eb.setFooter(event.getJDA().getSelfUser().getName() + " Kick",
+                        eb.setFooter(event.getJDA().getSelfUser().getName() + " Mute",
                                 event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                         eb.setTimestamp(Instant.now());
 
@@ -90,43 +91,56 @@ public class Mute extends ListenerAdapter {
                             });
                         });
                     } else {
-                        
+
                         muteRole = event.getGuild().getRolesByName("Muted", true).get(0);
                         EnumSet<Permission> denyPermissions = EnumSet.of(Permission.MESSAGE_WRITE);
 
-                        for (Channel channel : event.getGuild().getTextChannels()){
+                        for (Channel channel : event.getGuild().getTextChannels()) {
                             channel.getManager().putPermissionOverride(muteRole, null, denyPermissions).queue();
                         }
-
                         Member mentioned = event.getMessage().getMentionedMembers().get(0);
+                        if (!mentioned.getRoles().contains(event.getGuild().getRoleById(muteRole.getId()))) {
 
-                        // Build Information Embed to be sent to kicked user
-                        muted.setDescription("You've been muted on: " + event.getGuild().getName()
-                                + " for: There was no reason specified");
-                        muted.setColor(0xff5555);
-                        muted.setFooter(event.getJDA().getSelfUser().getName() + " Kicked",
-                                event.getJDA().getSelfUser().getEffectiveAvatarUrl());
-                        muted.setTimestamp(Instant.now());
+                            // Build Information Embed to be sent to kicked user
+                            muted.setDescription("You've been muted on: " + event.getGuild().getName()
+                                    + " for: There was no reason specified");
+                            muted.setColor(0xff5555);
+                            muted.setFooter(event.getJDA().getSelfUser().getName() + " Muted",
+                                    event.getJDA().getSelfUser().getEffectiveAvatarUrl());
+                            muted.setTimestamp(Instant.now());
 
-                        // Build Information Embed to be to server channel
-                        eb.setDescription("You've muted: " + mentioned.getAsMention() + " for: No reason specified");
-                        eb.setColor(0x4fff45);
-                        eb.setFooter(event.getJDA().getSelfUser().getName() + " Kick",
-                                event.getJDA().getSelfUser().getEffectiveAvatarUrl());
-                        eb.setTimestamp(Instant.now());
+                            // Build Information Embed to be to server channel
+                            eb.setDescription(
+                                    "You've muted: " + mentioned.getAsMention() + " for: No reason specified");
+                            eb.setColor(0x4fff45);
+                            eb.setFooter(event.getJDA().getSelfUser().getName() + " Mute",
+                                    event.getJDA().getSelfUser().getEffectiveAvatarUrl());
+                            eb.setTimestamp(Instant.now());
 
-                        mentioned.getUser().openPrivateChannel().queue((channel) -> {
-                            channel.sendMessage(muted.build()).queue();
-                            muted.clear();
+                            mentioned.getUser().openPrivateChannel().queue((channel) -> {
+                                channel.sendMessage(muted.build()).queue();
+                                muted.clear();
+
+                                event.getChannel().sendMessage(eb.build()).queue((message) -> {
+                                    message.delete().queueAfter(20, TimeUnit.SECONDS);
+                                    eb.clear();
+                                    event.getGuild().getController().addSingleRoleToMember(mentioned, muteRole).queue();
+                                });
+                            });
+                        } else {
+                            eb.setDescription(mentioned.getAsMention() + " is already muted!");
+                            eb.setColor(0xff5555);
+                            eb.setFooter(event.getJDA().getSelfUser().getName() + " Mute",
+                                    event.getJDA().getSelfUser().getEffectiveAvatarUrl());
+                            eb.setTimestamp(Instant.now());
 
                             event.getChannel().sendMessage(eb.build()).queue((message) -> {
                                 message.delete().queueAfter(20, TimeUnit.SECONDS);
                                 eb.clear();
-                                event.getGuild().getController().addSingleRoleToMember(mentioned, muteRole).queue();
                             });
-                        });
-                    }
+                        }
 
+                    }
                 }
             } else {
                 eb.setDescription(event.getMember().getAsMention()
