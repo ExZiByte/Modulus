@@ -21,6 +21,7 @@ public class Modulus {
         builder.addEventListener(new Ban());
         builder.addEventListener(new Clear());
         builder.addEventListener(new Kick());
+        builder.addEventListener(new Mute());
 
         builder.build();
     }
