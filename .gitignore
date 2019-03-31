@@ -11,4 +11,5 @@ target/classes/me/exzibyte/modulus/Data.class
 .project
 .editorconfig
 .classpath
-target/classes/me/exzibyte/modulus/Modulus.class
+target/*
+target/classes/me/exzibyte/modulus/Modules/Moderation/Kick.class
