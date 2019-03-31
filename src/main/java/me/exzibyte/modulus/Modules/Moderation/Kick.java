@@ -30,8 +30,8 @@ public class Kick extends ListenerAdapter {
 
                     event.getChannel().sendMessage(eb.build()).queue((message) -> {
                         message.delete().queueAfter(15, TimeUnit.SECONDS);
+                        eb.clear();
                     });
-                    eb.clear();
                 } else if (args.length < 3) {
 
                     Member mentioned = event.getMessage().getMentionedMembers().get(0);
