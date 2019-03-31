@@ -11,4 +11,4 @@ target/classes/me/exzibyte/modulus/Data.class
 .project
 .editorconfig
 .classpath
-target/
+target/classes/me/exzibyte/modulus/Modulus.class
