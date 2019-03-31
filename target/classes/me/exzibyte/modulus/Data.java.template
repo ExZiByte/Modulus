@@ -1,0 +1,7 @@
+//Insert Package name
+package ;
+
+public class Data {
+    final String TOKEN = "REPLACE WITH YOUR TOKEN PROVIDED BY YOUR DISCORD DEVELOPER PORTAL";
+    public final String PREFIX = "PUT DESIRED PREFIX HERE";
+}
