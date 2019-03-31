@@ -19,6 +19,7 @@ public class Modulus {
         builder.setGame(Game.playing("with modular bits!"));
 
         builder.addEventListener(new Ban());
+        builder.addEventListener(new Clear());
         builder.addEventListener(new Kick());
 
         builder.build();
