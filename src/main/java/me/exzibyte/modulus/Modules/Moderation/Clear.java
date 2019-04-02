@@ -1,3 +1,4 @@
+//Insert own package name 
 package me.exzibyte.modulus.Modules.Moderation;
 
 import java.time.Instant;
