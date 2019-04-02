@@ -22,6 +22,7 @@ public class Modulus {
         builder.addEventListener(new Kick());
         builder.addEventListener(new Mute());
         builder.addEventListener(new OnReady());
+        builder.addEventListener(new Softban());
         builder.addEventListener(new Unmute());
 
         builder.build();
