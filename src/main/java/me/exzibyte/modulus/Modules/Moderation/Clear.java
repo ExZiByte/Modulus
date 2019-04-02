@@ -18,6 +18,8 @@ public class Clear extends ListenerAdapter {
         Data data = new Data();
         EmbedBuilder eb = new EmbedBuilder();
         if (args[0].equalsIgnoreCase(data.PREFIX + "clear")) {
+            // Uncomment(remove the //) the next line if you would like the bot to auto delete the command message
+            // event.getMessage().delete().queue();
             if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
                 if (args.length < 2) {
                     eb.setDescription("You didn't specify enough arguments");

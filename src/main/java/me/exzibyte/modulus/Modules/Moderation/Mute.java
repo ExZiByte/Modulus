@@ -24,6 +24,8 @@ public class Mute extends ListenerAdapter {
         Role muteRole;
 
         if (args[0].equalsIgnoreCase(data.PREFIX + "mute")) {
+            // Uncomment(remove the //) the next line if you would like the bot to auto delete the command message
+            // event.getMessage().delete().queue();
             if (event.getMember().hasPermission(Permission.VOICE_MUTE_OTHERS)) {
                 if (args.length < 2) {
                     eb.setDescription("You didn't specify enough arguments \n" + data.PREFIX + "mute @<member>");

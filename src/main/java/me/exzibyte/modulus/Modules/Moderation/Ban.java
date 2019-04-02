@@ -21,6 +21,8 @@ public class Ban extends ListenerAdapter {
         EmbedBuilder eb = new EmbedBuilder();
         EmbedBuilder banned = new EmbedBuilder();
         if (args[0].equalsIgnoreCase(data.PREFIX + "ban")) {
+            // Uncomment(remove the //) the next line if you would like the bot to auto delete the command message
+            // event.getMessage().delete().queue();
             if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                 if (args.length < 2) {
                     eb.setDescription("You didn't specify enough arguments");
