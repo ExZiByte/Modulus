@@ -89,17 +89,17 @@ public class Ban extends ListenerAdapter {
                     });
 
                 }
-                } else {
-                    eb.setDescription(event.getMember().getAsMention()
-                            + ", You dont have the permission to ban members from this guild.");
-                    eb.setColor(0xff5555);
-                    eb.setFooter("Insufficient Permissions", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
-                    eb.setTimestamp(Instant.now());
-                    event.getChannel().sendMessage(eb.build()).queue((message) -> {
-                        message.delete().queueAfter(15, TimeUnit.SECONDS);
-                        eb.clear();
-                    });
-                }
+            } else {
+                eb.setDescription(event.getMember().getAsMention()
+                        + ", You dont have the permission to ban members from this guild.");
+                eb.setColor(0xff5555);
+                eb.setFooter("Insufficient Permissions", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
+                eb.setTimestamp(Instant.now());
+                event.getChannel().sendMessage(eb.build()).queue((message) -> {
+                    message.delete().queueAfter(15, TimeUnit.SECONDS);
+                    eb.clear();
+                });
+            }
         }
     }
 
