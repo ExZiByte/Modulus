@@ -19,7 +19,6 @@ public class OnReady extends ListenerAdapter {
             public void run() {
                 Random random = new Random();
                 int game = random.nextInt(games.length);
-                System.out.println("Switching game to: " + games[game]);
                 event.getJDA().getPresence().setGame(games[game]);
             }
         }, 0, 2, TimeUnit.MINUTES);
