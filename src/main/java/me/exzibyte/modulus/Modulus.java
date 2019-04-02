@@ -10,7 +10,6 @@ import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 public class Modulus {
-
     public static void main(String[] args) throws LoginException, InterruptedException, RateLimitedException {
         Data data = new Data();
         final JDABuilder builder = new JDABuilder(AccountType.BOT).setToken(data.TOKEN);
@@ -22,6 +21,8 @@ public class Modulus {
         builder.addEventListener(new Clear());
         builder.addEventListener(new Kick());
         builder.addEventListener(new Mute());
+        builder.addEventListener(new OnReady());
+        builder.addEventListener(new Unmute());
 
         builder.build();
     }
