@@ -26,7 +26,7 @@ public class Mute extends ListenerAdapter {
         if (args[0].equalsIgnoreCase(data.PREFIX + "mute")) {
             if (event.getMember().hasPermission(Permission.VOICE_MUTE_OTHERS)) {
                 if (args.length < 2) {
-                    eb.setDescription("You didn't specify enough arguments");
+                    eb.setDescription("You didn't specify enough arguments \n" + data.PREFIX + "mute @<member>");
                     eb.setColor(0xff5555);
                     eb.setFooter("Insufficient Arguments", event.getJDA().getSelfUser().getEffectiveAvatarUrl());
                     eb.setTimestamp(Instant.now());
@@ -51,10 +51,8 @@ public class Mute extends ListenerAdapter {
                                         Permission.NICKNAME_CHANGE, Permission.MESSAGE_ADD_REACTION)
                                 .queue();
 
-                        EnumSet<Permission> denyPermissions = EnumSet.of(Permission.MESSAGE_WRITE);
-
                         for (Channel channel : event.getGuild().getTextChannels()) {
-                            channel.getManager().putPermissionOverride(muteRole, null, denyPermissions).queue();
+                            channel.getManager().putPermissionOverride(muteRole, EnumSet.of(Permission.MESSAGE_HISTORY, Permission.MESSAGE_READ), EnumSet.of(Permission.MESSAGE_WRITE)).queue();
                         }
 
                         event.getChannel()
@@ -93,10 +91,9 @@ public class Mute extends ListenerAdapter {
                     } else {
 
                         muteRole = event.getGuild().getRolesByName("Muted", true).get(0);
-                        EnumSet<Permission> denyPermissions = EnumSet.of(Permission.MESSAGE_WRITE);
 
                         for (Channel channel : event.getGuild().getTextChannels()) {
-                            channel.getManager().putPermissionOverride(muteRole, null, denyPermissions).queue();
+                            channel.getManager().putPermissionOverride(muteRole, EnumSet.of(Permission.MESSAGE_HISTORY, Permission.MESSAGE_READ), EnumSet.of(Permission.MESSAGE_WRITE)).queue();
                         }
                         Member mentioned = event.getMessage().getMentionedMembers().get(0);
                         if (!mentioned.getRoles().contains(event.getGuild().getRoleById(muteRole.getId()))) {
